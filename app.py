@@ -66,7 +66,7 @@ def validateSignUp():
     if _email and _password:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO tbl_users(email, password) VALUES (%s, %s)", (_name, _email, _passowrd))
+        cursor.execute("INSERT INTO tbl_users(email, password) VALUES (%s, %s)", (_email, _password))
         data = cursor.fetchall()
         if len(data) == 0:
             conn.commit()
