@@ -20,6 +20,7 @@ app.secret_key = 'secret key can be anything!'
 def main():
     return render_template('index.html')
 
+
 @app.route('/showSignIn')
 def showSignin():
     return render_template('signin.html')
@@ -53,7 +54,6 @@ def validateLogin():
         con.close()
 
 
-
 @app.route('/showSignUp')
 def showSignup():
     return render_template('signup.html')
@@ -76,6 +76,7 @@ def validateSignUp():
             # return json.dumps({'error': str(data[0])})
     else:
         return json.dumps({'html':'<span>Enter the required fields</span>'})
+
 
 if __name__ == "__main__":
     app.run()
