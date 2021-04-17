@@ -20,7 +20,8 @@ app.secret_key = 'secret key can be anything!'
 def main():
     return render_template('index.html')
 
-@app.route('/showSignin')
+
+@app.route('/showSignIn')
 def showSignin():
     return render_template('signin.html')
 
@@ -51,6 +52,30 @@ def validateLogin():
     finally:
         cursor.close()
         con.close()
+
+
+@app.route('/showSignUp')
+def showSignup():
+    return render_template('signup.html')
+
+@app.route('/validateSignUp', methods=["POST"])
+def validateSignUp():
+    _email = request.form['inputEmail']
+    _password = request.form['inputPassword']
+
+    if _email and _password:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO tbl_users(email, password) VALUES (%s, %s)", (_email, _password))
+        data = cursor.fetchall()
+        if len(data) == 0:
+            conn.commit()
+            return json.dumps({'message': 'User created successfully'})
+        else:
+            return render_template('error.html', error=str(data[0]))
+            # return json.dumps({'error': str(data[0])})
+    else:
+        return json.dumps({'html':'<span>Enter the required fields</span>'})
 
 
 if __name__ == "__main__":
