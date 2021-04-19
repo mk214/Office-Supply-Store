@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, json, redirect
 from flaskext.mysql import MySQL
 from flask import session, jsonify
+import bcrypt
 
 app = Flask(__name__)
 
@@ -29,7 +30,7 @@ def validateLogin():
     try:
         _email = request.form['inputEmail']
         _password = request.form['inputPassword']
-
+        _password = _password.encode('utf-8')
         con = mysql.connect()
         cursor = con.cursor()
 
@@ -38,7 +39,11 @@ def validateLogin():
         data = cursor.fetchall()
 
         if len(data) > 0:
-            if str(data[0][2]) == _password:
+            _encryptPassword = data[0][2]
+            _encryptPassword = _encryptPassword.rstrip('\x00')
+            _encryptPassword = _encryptPassword.encode('utf-8')
+
+            if bcrypt.checkpw(_password, _encryptPassword):
                 session['user'] = data[0][0]
                 return redirect('/userHome')
             else:
@@ -62,11 +67,18 @@ def showSignup():
 def validateSignUp():
     _email = request.form['inputEmail']
     _password = request.form['inputPassword']
+    _password = _password.encode('utf8')
+    _encryptPassword = bcrypt.hashpw(_password, bcrypt.gensalt())
 
     if _email and _password:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO tbl_users(email, password) VALUES (%s, %s)", (_email, _password))
+        cursor.execute("SELECT * FROM tbl_user")
+        data = cursor.fetchall()
+        for user in data:
+            if _email == user[1]:
+                return json.dumps({'error': "User already exists!"})
+        cursor.execute("INSERT INTO tbl_users(email, password) VALUES (%s, %s)", (_email, _encryptPassword))
         data = cursor.fetchall()
         if len(data) == 0:
             conn.commit()
