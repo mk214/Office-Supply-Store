@@ -46,7 +46,7 @@ def validateLogin():
 
             if bcrypt.checkpw(_password, _encryptPassword):
                 session['user'] = data[0][0]
-                return redirect('/userHome')
+                return redirect('/')
             else:
                 return render_template('error.html', error='Wrong Email address or Password.')
         else:
@@ -73,7 +73,7 @@ def validateSignUp():
     if _email and _password:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM tbl_user")
+        cursor.execute("SELECT * FROM tbl_users")
         data = cursor.fetchall()
         for user in data:
             if _email == user[1]:
@@ -82,12 +82,20 @@ def validateSignUp():
         data = cursor.fetchall()
         if len(data) == 0:
             conn.commit()
-            return json.dumps({'message': 'User created successfully'})
+            return redirect('/')
         else:
             return render_template('error.html', error=str(data[0]))
             # return json.dumps({'error': str(data[0])})
     else:
         return json.dumps({'html':'<span>Enter the required fields</span>'})
+
+
+@app.route('/showHistory')
+def showHistory():
+    if session.get('user'):
+        return render_template('history.html')
+    else:
+        return redirect('/showSignIn')
 
 
 if __name__ == "__main__":
