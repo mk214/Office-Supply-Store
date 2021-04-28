@@ -21,6 +21,10 @@ app.secret_key = 'secret key can be anything!'
 def main():
     return render_template('index.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/')
 
 @app.route('/showSignIn')
 def showSignin():
@@ -96,6 +100,32 @@ def showHistory():
         return render_template('history.html')
     else:
         return redirect('/showSignIn')
+
+@app.route('/getHistory')
+def getHistory():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT * FROM tbl_history INNER JOIN tbl_products ON tbl_history.productId = tbl_products.id WHERE userId = %s", (_user))
+
+            data = cursor.fetchall()
+            # columns in data is in order : transactionId, userId, productId, quantity, id, name, inventory, category, link, deleted
+
+            conn.commit()
+            return jsonify(data)
+
+        else:
+            return json.dumps({'error': "User not signed in"})
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
 
 
 if __name__ == "__main__":
