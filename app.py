@@ -94,6 +94,40 @@ def validateSignUp():
         return json.dumps({'html':'<span>Enter the required fields</span>'})
 
 
+@app.route('/addToCart', methods=["POST"])
+def addToCart():
+    try:
+        if session.get('user'):
+            _itemId = request.json['productId']
+            _quantity = request.json['quantity']
+            _user = session.get('user')
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("INSERT INTO tbl_cart (userId, itemId, quantity) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE quantity = quantity+%s", (_user , _itemId, _quantity, _quantity))
+
+            conn.commit()
+
+            return json.dumps({'message': 'Inserted Product'})
+
+        else:
+            return redirect('/showSignIn')
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/showCart')
+def showCart():
+    if session.get('user'):
+        return render_template('cart.html')
+    else:
+        return redirect('/showSignIn')
+
+
 @app.route('/showHistory')
 def showHistory():
     if session.get('user'):
