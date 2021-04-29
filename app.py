@@ -181,6 +181,65 @@ def getCart():
         conn.close()
 
 
+@app.route('/increaseQuantityInCart', methods=['POST'])
+def increaseQuantityInCart():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+            _itemId = request.json['itemId']
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("UPDATE tbl_cart SET quantity = quantity+1 WHERE userId = %s AND itemId = %s AND (SELECT inventory FROM tbl_products WHERE id=%s)>quantity", (_user, _itemId, _itemId))
+
+            data = cursor.rowcount
+
+            if data > 0:
+                conn.commit()
+                return json.dumps({'message': "update successful"})
+            else:
+                # Arbitrary error code for "not enough inventory"
+                return json.dumps({'error': "36"})
+
+        else:
+            return json.dumps({'error': "User not signed in"})
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/decreaseQuantityInCart', methods=['POST'])
+def decreaseQuantityInCart():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+            _itemId = request.json['itemId']
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("UPDATE tbl_cart SET quantity = quantity-1 WHERE userId = %s AND itemId = %s", (_user, _itemId))
+
+            data = cursor.rowcount
+
+            if data > 0:
+                conn.commit()
+                return json.dumps({'message': "update successful"})
+            else:
+                return json.dumps({'error': "Quantity can't be zero"})
+
+        else:
+            return json.dumps({'error': "User not signed in"})
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
+
 @app.route('/showHistory')
 def showHistory():
     if session.get('user'):
