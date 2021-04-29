@@ -98,7 +98,7 @@ def validateSignUp():
 def addToCart():
     try:
         if session.get('user'):
-            _itemId = request.json['productId']
+            _itemId = request.json['itemId']
             _quantity = request.json['quantity']
             _user = session.get('user')
 
@@ -120,12 +120,65 @@ def addToCart():
         cursor.close()
         conn.close()
 
+@app.route('/removeFromCart', methods=['DELETE'])
+def removeFromCart():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+            _itemId = request.json['itemId']
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("DELETE FROM tbl_cart WHERE userId=%s AND itemId=%s", (_user, _itemId))
+
+            data = cursor.fetchall()
+            # columns in data is in order : userId, ItemId, quantity, id, name, price, inventory, category, link, deleted
+
+            conn.commit()
+            return jsonify(data)
+
+        else:
+            return json.dumps({'error': "User not signed in"})
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
+
 @app.route('/showCart')
 def showCart():
     if session.get('user'):
         return render_template('cart.html')
     else:
         return redirect('/showSignIn')
+
+@app.route('/getCart')
+def getCart():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT * FROM tbl_cart INNER JOIN tbl_products ON tbl_cart.itemId = tbl_products.id WHERE userId = %s", (_user))
+
+            data = cursor.fetchall()
+            # columns in data is in order : userId, ItemId, quantity, id, name, price, inventory, category, link, deleted
+
+            conn.commit()
+            return jsonify(data)
+
+        else:
+            return json.dumps({'error': "User not signed in"})
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
 
 
 @app.route('/showHistory')
@@ -144,10 +197,10 @@ def getHistory():
             conn = mysql.connect()
             cursor = conn.cursor()
 
-            cursor.execute("SELECT * FROM tbl_history INNER JOIN tbl_products ON tbl_history.productId = tbl_products.id WHERE userId = %s", (_user))
+            cursor.execute("SELECT * FROM tbl_history INNER JOIN tbl_products ON tbl_history.itemId = tbl_products.id WHERE userId = %s", (_user))
 
             data = cursor.fetchall()
-            # columns in data is in order : transactionId, userId, productId, quantity, id, name, inventory, category, link, deleted
+            # columns in data is in order : transactionId, userId, itemId, quantity, id, name, price, inventory, category, link, deleted
 
             conn.commit()
             return jsonify(data)
