@@ -93,6 +93,42 @@ def validateSignUp():
     else:
         return json.dumps({'html':'<span>Enter the required fields</span>'})
 
+@app.route('/checkout', methods=["POST"])
+def checkout():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            # Move all items in cart to checkout
+            cursor.execute("INSERT INTO tbl_history (userId, itemId, quantity) SELECT * FROM tbl_cart WHERE userId=%s", (_user ))
+            conn.commit()
+
+            # Update inventory of products at checkout
+            cursor.execute("SELECT quantity,itemId FROM tbl_cart WHERE userId = %s",_user)
+            data = cursor.fetchall()
+            conn.commit()
+
+            sql = "UPDATE tbl_products SET inventory = inventory-%s WHERE id=%s"
+            cursor.executemany(sql, data)
+            conn.commit()
+
+            # Clear cart
+            cursor.execute("DELETE FROM tbl_cart WHERE userId=%s",(_user))
+            conn.commit()
+
+            return json.dumps({'message': 'Transaction Successful'})
+
+        else:
+            return redirect('/showSignIn')
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/addToCart', methods=["POST"])
 def addToCart():

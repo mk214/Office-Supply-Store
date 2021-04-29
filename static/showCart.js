@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $("#error36").hide();
+    $("#successful").hide();
     loadTable();
 
     //Ajax Call to load page with the cart inforamtion
@@ -40,6 +41,7 @@ $(document).ready(function(){
                 dataType: "json",
                 contentType: 'application/json'
             });
+            $("#error36").hide();
         });
 
         //update quantities, instead of quantity being zero it is removed from cart
@@ -63,7 +65,6 @@ $(document).ready(function(){
             }
             else{
                 var send = {itemId:$(this).closest("tr").find("#name").attr("itemid")};
-                console.log(send);
                 $(this).closest("tr").remove();
                 
                 $.ajax({ 
@@ -71,10 +72,14 @@ $(document).ready(function(){
                     url:"/removeFromCart",
                     data: JSON.stringify(send),
                     dataType: "json",
-                    contentType: 'application/json'
+                    contentType: 'application/json',
+                    success: function(data){
+                        $( "#cart" ).load( location.href + " #cart" );
+                        loadTable();
+                    },
+                    error: function(error){console.log('error : '+error.responseText);}
                 });
             }
-            //location.reload(); 
         });
         $("table").on("click", ".fa-plus", function(){
             var send = {itemId:$(this).closest("tr").find("#name").attr("itemid")};
@@ -91,8 +96,22 @@ $(document).ready(function(){
                 },
                 error: function(error){console.log('error : '+error.responseText);}
               });
-            //location.reload(); 
         });
 
         //Checkout, remove everything from cart and add it to purchase history
+        $("#checkout").click(function(){
+            $.ajax({ 
+                type:"POST",
+                url:"/checkout",
+                dataType: "json",
+                contentType: 'application/json',
+                success: function(data){
+                    $("#successful").show();
+                    console.log(data);
+                    $( "#cart" ).load( location.href + " #cart" );
+                    loadTable();
+                },
+                error: function(error){console.log('error : '+error.responseText);}
+            });
+        });
 });
