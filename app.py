@@ -98,7 +98,7 @@ def validateSignUp():
 def addToCart():
     try:
         if session.get('user'):
-            _itemId = request.json['itemId']
+            _itemId = request.json['productId']
             _quantity = request.json['quantity']
             _user = session.get('user')
 
