@@ -334,7 +334,6 @@ def showAdminDashboard():
             deleted_list = []
 
             for li in data:
-                print(li)
                 product_ids.append(str(li[0]))
                 name_list.append(str(li[1]))
                 price_list.append(str(li[2]))
@@ -401,6 +400,49 @@ def addItem():
     finally:
         cursor.close()
         conn.close()
+
+
+@app.route('/showEditProduct/<product_id>')
+def showEditItem(product_id):
+    print("sdjlkfbn")
+    if session.get('user'):
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        _user = session.get('user')
+        cursor.execute("SELECT * FROM tbl_products WHERE id = {0}".format(product_id))
+        data = cursor.fetchall()
+
+        return render_template('editProduct.html', data=data[0])
+    else:
+        return render_template('error.html',error = 'Unauthorized Access')
+
+
+@app.route('/editProduct/<product_id>', methods=['POST'])
+def editProduct(product_id):
+    try:
+        if session.get('user'):
+            _title = request.form['inputName']
+            _price = request.form['inputPrice']
+            _inventory= request.form['inputInventory']
+            _category = request.form['inputCategory']
+            _link = request.form['inputLink']
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("UPDATE tbl_products SET name=%s, price=%s, inventory=%s, category=%s, link=%s WHERE id = %s", (_title, _price, _inventory, _category, _link, product_id))
+            conn.commit()
+
+            return redirect('/adminDashboard')
+        else:
+                return render_template('error.html', error='An error occured!')
+    except Exception as e:
+        return render_template('error.html',error = str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+
 
 if __name__ == "__main__":
     app.run()
