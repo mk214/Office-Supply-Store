@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, json, redirect
 from flaskext.mysql import MySQL
 from flask import session, jsonify
 import bcrypt
+from random import randrange
 
 app = Flask(__name__)
 
@@ -361,6 +362,40 @@ def delItem(product_id):
             conn.commit()
             return redirect('/adminDashboard')
             
+    except Exception as e:
+        return render_template('error.html',error = str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/showAddProduct')
+def showAddItem():
+    return render_template('addProduct.html')
+
+@app.route('/addProduct', methods=['POST'])
+def addItem():
+    try:
+        if session.get('user'):
+            _title = request.form['inputName']
+            _price = request.form['inputPrice']
+            _inventory= request.form['inputInventory']
+            _category = request.form['inputCategory']
+            _link = request.form['inputLink']
+            _product_id = randrange(1,100000)
+            
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            cursor.execute("INSERT INTO tbl_products(id,name, price, inventory, category, link, deleted) VALUES (%s, %s, %s, %s, %s, %s, %s)", (_product_id,_title, _price, _inventory, _category, _link, 0))
+
+            data = cursor.fetchall()
+
+            if len(data) == 0:
+                conn.commit()
+                # return json.dumps({'message':'Todo item created successfully'})
+                return redirect('/adminDashboard')
+            else:
+                return render_template('error.html', error='An error occured!')
     except Exception as e:
         return render_template('error.html',error = str(e))
     finally:

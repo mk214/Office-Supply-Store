@@ -43,7 +43,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Inventory</th>
                     <th scope="col">Category</th>
-                    <th scope="col"><a class='btn btn-primary btn-sm mr-2' href='/addItem'>Add</a></th>
+                    <th scope="col"><a class='btn btn-primary btn-sm mr-2' href='/showAddProduct'>Add</a></th>
                     
                 </thead>
                 <tbody id="table_body">
@@ -91,7 +91,7 @@
                 td3.append(inventory_list[i])
                 var td4 = $("<td scope='col'></td>")
                 td4.append(category_list[i])
-                var td5 = $(`<td><a class='btn btn-outline-warning btn-sm mr-2' href='/editProduct/${product_ids[i]}'>Edit</a><a class='btn btn-outline-danger btn-sm' href='/deleteProduct/${product_ids[i]}'>Delete</a></td>`)
+                var td5 = $(`<td><a class='btn btn-outline-warning btn-sm mr-2' href='/showEditProduct/${product_ids[i]}'>Edit</a><a class='btn btn-outline-danger btn-sm' href='/deleteProduct/${product_ids[i]}'>Delete</a></td>`)
                 
                 tr.append(td1)
                 tr.append(td2)

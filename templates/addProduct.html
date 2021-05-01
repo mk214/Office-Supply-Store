@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Python Flask Todo List App</title>
+
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link href="../static/signup.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+  </head>
+
+  <body>
+    <div class="container">
+        <div class="header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+     
+           <div id="navbarText">
+             <ul class="navbar-nav mr-auto">
+
+              <li class="nav-item active">
+                 <a class="nav-link" href="/">Home</a>
+               </li>
+               
+               <li class="nav-item active">
+                 <a class="nav-link" href="/logout">Logout</a>
+               </li>
+             </ul>
+            
+           </div>
+         </nav>
+
+         <h3 class="text-muted">Add Product</h3>
+         <form class="form-horizontal" action="/addProduct" method="post">
+          <fieldset>  
+              <legend>Add new product</legend>
+              <!-- Name input -->
+              <div class="form-group">
+                  <label class="col-md-4 control-label" for="inputName">Name</label>
+                  <div class="col-md-4">
+                      <input type="text" name="inputName" id="inputName" placeholder="Name" />
+                  </div>
+              </div>
+              <!-- Price input -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="inputPrice">Price</label>
+                <div class="col-md-4">
+                    <input type="text" name="inputPrice" id="inputPrice" placeholder="Price" />
+                </div>
+             </div>
+            <!-- Inventory input -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="inputInventory">Inventory</label>
+              <div class="col-md-4">
+                  <input type="text" name="inputInventory" id="inputInventory" placeholder="Inventory" />
+              </div>
+           </div>
+          <!-- Category input -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="inputCategory">Category</label>
+            <div class="col-md-4">
+                <input type="text" name="inputCategory" id="inputCategory" placeholder="Category" />
+            </div>
+         </div>
+        <!-- Link input -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="inputLink">Link</label>
+          <div class="col-md-4">
+              <input type="text" name="inputLink" id="inputLink" placeholder="Link" />
+          </div>
+       </div>
+
+              <!-- Button -->
+              <div class="form-group">
+                  <div class="col-md-4">
+                      <input id="singlebutton" type="submit" name="singlebutton" class="btn btn-primary" value="Submit" />
+                  </div>
+              </div>
+          </fieldset>
+        </form>
+
+     </div>
+    </div>
+  </body>
+</html>
