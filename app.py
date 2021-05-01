@@ -12,7 +12,7 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_DB'] = 'officesupply'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_PORT'] = 3307
+app.config['MYSQL_DATABASE_PORT'] = 8889
 mysql.init_app(app)
 
 app.secret_key = 'secret key can be anything!'
@@ -309,6 +309,16 @@ def getHistory():
         cursor.close()
         conn.close()
 
-
+@app.route('/adminDashboard')
+def showAdminDashboard():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+            print(_user)
+            return render_template('admin.html')
+        else:
+            return render_template('index.html')
+    except Exception as e:
+        return json.dumps({'error': str(e)})
 if __name__ == "__main__":
     app.run()
