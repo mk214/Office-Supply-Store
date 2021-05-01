@@ -315,11 +315,17 @@ def showAdminDashboard():
     try:
         if session.get('user'):
             # VERIFY the user is admin
-            _user = session.get('user')
-
-
+            _user_id = session.get('user')
             conn = mysql.connect()
             cursor = conn.cursor()
+            cursor.execute("SELECT email FROM tbl_users WHERE id = {0}".format(_user_id))
+            data = cursor.fetchall()
+            user_name = data[0][0]
+          
+            if user_name != "admin@gmail.com":
+                return render_template('index.html') 
+
+           
             #Get all products whre deleted is 1 (true)??
             cursor.execute("SELECT * FROM tbl_products")
 
@@ -404,7 +410,6 @@ def addItem():
 
 @app.route('/showEditProduct/<product_id>')
 def showEditItem(product_id):
-    print("sdjlkfbn")
     if session.get('user'):
         conn = mysql.connect()
         cursor = conn.cursor()
