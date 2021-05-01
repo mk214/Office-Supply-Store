@@ -313,12 +313,59 @@ def getHistory():
 def showAdminDashboard():
     try:
         if session.get('user'):
+            # VERIFY the user is admin
             _user = session.get('user')
-            print(_user)
-            return render_template('admin.html')
+
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            #Get all products whre deleted is 1 (true)??
+            cursor.execute("SELECT * FROM tbl_products")
+
+            data = cursor.fetchall()
+
+            product_ids = []
+            name_list = []
+            price_list = []
+            inventory_list = []
+            category_list = []
+            link_list = []
+            deleted_list = []
+
+            for li in data:
+                print(li)
+                product_ids.append(str(li[0]))
+                name_list.append(str(li[1]))
+                price_list.append(str(li[2]))
+                inventory_list.append(str(li[3]))
+                category_list.append(str(li[4]))
+                # link_list.append(str(li[5]))
+                # deleted_list.append(str(li[6]))
+
+            return render_template('admin.html', product_ids = product_ids, name_list = name_list, price_list = price_list, inventory_list = inventory_list, category_list = category_list) 
         else:
             return render_template('index.html')
     except Exception as e:
         return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/deleteProduct/<product_id>', methods=['GET', 'POST'])
+def delItem(product_id):
+    try:
+        if session.get('user'):
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM tbl_products WHERE id = {0}".format(product_id))
+            conn.commit()
+            return redirect('/adminDashboard')
+            
+    except Exception as e:
+        return render_template('error.html',error = str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
 if __name__ == "__main__":
     app.run()

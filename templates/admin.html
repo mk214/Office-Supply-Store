@@ -43,10 +43,10 @@
                     <th scope="col">Price</th>
                     <th scope="col">Inventory</th>
                     <th scope="col">Category</th>
-                    <th scope="col"></th>
+                    <th scope="col"><a class='btn btn-primary btn-sm mr-2' href='/addItem'>Add</a></th>
                     
                 </thead>
-                <tbody>
+                <tbody id="table_body">
                     <tr>
                         <td scope="col">Iphone</td>
                         <td scope="col">$999</td>
@@ -66,6 +66,45 @@
         </div>
         
     </div>
+
+    <script>
+        $(document).ready(function(){
+            var product_ids = '{{product_ids|tojson}}'
+            var name_list = '{{ name_list|tojson }}'
+            var price_list = '{{ price_list|tojson }}'
+            var inventory_list = '{{inventory_list|tojson}}'
+            var category_list = '{{category_list|tojson}}'
+            product_ids = JSON.parse(product_ids);
+            name_list = JSON.parse(name_list);
+            price_list = JSON.parse(price_list);
+            inventory_list = JSON.parse(inventory_list);
+            category_list = JSON.parse(category_list);
+
+            for(i = 0; i < product_ids.length; i++)
+            {
+                var tr = $("<tr></tr>")
+                var td1 = $("<td scope='col'></td>")
+                td1.append(name_list[i])
+                var td2 = $("<td scope='col'></td>")
+                td2.append(price_list[i])
+                var td3 = $("<td scope='col'></td>")
+                td3.append(inventory_list[i])
+                var td4 = $("<td scope='col'></td>")
+                td4.append(category_list[i])
+                var td5 = $(`<td><a class='btn btn-outline-warning btn-sm mr-2' href='/editProduct/${product_ids[i]}'>Edit</a><a class='btn btn-outline-danger btn-sm' href='/deleteProduct/${product_ids[i]}'>Delete</a></td>`)
+                
+                tr.append(td1)
+                tr.append(td2)
+                tr.append(td3)
+                tr.append(td4)
+                tr.append(td5)
+                $('#table_body').append(tr)
+            }
+
+        })
+
+    </script>
 </body>
+
 
 </html>
