@@ -327,7 +327,7 @@ def showAdminDashboard():
 
            
             #Get all products whre deleted is 1 (true)??
-            cursor.execute("SELECT * FROM tbl_products")
+            cursor.execute("SELECT * FROM tbl_products WHERE deleted = 0")
 
             data = cursor.fetchall()
 
@@ -363,7 +363,9 @@ def delItem(product_id):
         if session.get('user'):
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM tbl_products WHERE id = {0}".format(product_id))
+            cursor.execute("UPDATE tbl_products SET deleted=%s WHERE id = %s", (1, product_id))
+
+            # cursor.execute("DELETE FROM tbl_products WHERE id = {0}".format(product_id))
             conn.commit()
             return redirect('/adminDashboard')
             
