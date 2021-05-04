@@ -9,7 +9,7 @@ mysql = MySQL()
 
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
-app.config['MYSQL_DATABASE_DB'] = 'office'
+app.config['MYSQL_DATABASE_DB'] = 'officesupply'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_PORT'] = 8889
 mysql.init_app(app)
@@ -40,7 +40,7 @@ def searchCategory():
         # go through each todolist item entry and turn it into a json object then append it to the list for the json dump
         productInfo = []
         for temp in data:
-            neededData = {'id':temp[0], 'name':temp[1], 'price':temp[2], 'inventory':temp[3], 'category':temp[4], 'image':temp[5]}
+            neededData = {'id':temp[0], 'name':temp[1], 'price':temp[2], 'inventory':temp[3], 'category':temp[4], 'link':temp[5], 'deleted':temp[6]}
             productInfo.append(neededData)
 
         return json.dumps(productInfo)
@@ -70,7 +70,7 @@ def searchItem():
         # go through each todolist item entry and turn it into a json object then append it to the list for the json dump
         productInfo = []
         for temp in data:
-            neededData = {'id':temp[0], 'name':temp[1], 'price':temp[2], 'inventory':temp[3], 'category':temp[4], 'image':temp[5]}
+            neededData = {'id':temp[0], 'name':temp[1], 'price':temp[2], 'inventory':temp[3], 'category':temp[4], 'link':temp[5], 'deleted':temp[6]}
             productInfo.append(neededData)
 
         return json.dumps(productInfo)
@@ -98,7 +98,7 @@ def showProducts():
         # go through each todolist item entry and turn it into a json object then append it to the list for the json dump
         productInfo = []
         for temp in data:
-            neededData = {'id':temp[0], 'name':temp[1], 'price':temp[2], 'inventory':temp[3], 'category':temp[4], 'image':temp[5]}
+            neededData = {'id':temp[0], 'name':temp[1], 'price':temp[2], 'inventory':temp[3], 'category':temp[4], 'link':temp[5], 'deleted':temp[6]}
             productInfo.append(neededData)
 
         return json.dumps(productInfo)
