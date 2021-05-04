@@ -345,10 +345,10 @@ def showAdminDashboard():
                 price_list.append(str(li[2]))
                 inventory_list.append(str(li[3]))
                 category_list.append(str(li[4]))
-                # link_list.append(str(li[5]))
+                link_list.append(str(li[5]))
                 # deleted_list.append(str(li[6]))
 
-            return render_template('admin.html', product_ids = product_ids, name_list = name_list, price_list = price_list, inventory_list = inventory_list, category_list = category_list) 
+            return render_template('admin.html', product_ids = product_ids, name_list = name_list, price_list = price_list, inventory_list = inventory_list, category_list = category_list, link_list=link_list) 
         else:
             return render_template('index.html')
     except Exception as e:
