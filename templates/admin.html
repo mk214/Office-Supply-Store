@@ -31,9 +31,10 @@
                
               </div>
             </nav>
-
-            <h3 class="text-muted"><span>Admin Dashboard<span></span> <a class='btn btn-primary btn-sm mr-2 float-right' href='/showAddProduct'>Add</a></h3>
-        </div>
+            <div style="background-color: #e0e0e0; padding: 11px 1px 1px 5px;">
+              <h3 class="text-muted"><span>Admin Dashboard<span></span> <a class='btn btn-primary btn-sm mr-2 float-right' href='/showAddProduct'>Add</a></h3>
+            </div>
+          </div>
 
         <div id="products-list" class="row">
         </div>
@@ -56,9 +57,9 @@
             link_list = JSON.parse(link_list);
             for(i = 0; i < product_ids.length; i++)
             {
-                var div_col = $("<div class='col-md-4'></div>")
+                var div_col = $("<div class='col-md-4 mb-5'></div>")
                 var div_card = $("<div class='card'></div>")
-                var img = $(`<img class='card-img-top' src='../static/images/${link_list[i]}' alt='${name_list[i]}' />`)
+                var img = $(`<img class='card-img-top' style="height: 15vw; object-fit: cover" src='../static/images/${link_list[i]}' alt='${name_list[i]}' />`)
                 var div_body = $("<div class='card-body'></div>")
                 var h5 = $("<h5 class='card-title'></h5>")
                 h5.append(name_list[i])
