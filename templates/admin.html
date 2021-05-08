@@ -50,28 +50,31 @@
               <div class="searchSection">
                 <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button id="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <select id="chooseCategory" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <option selected>Categories</option>
+                  <option>School Supplies</option>
+                  <option>Computers</option>
+                  <option>Printers</option>
+                  <option>Furniture</option>
+                  <option>Cleaning</option>
+                  <option>Paper</option>
+                  <option>Ink</option>
+                </select>
               </div>
-              <select id="chooseCategory" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                <option selected>Categories</option>
-                <option>School Supplies</option>
-                <option>Computers</option>
-                <option>Printers</option>
-                <option>Furniture</option>
-                <option>Cleaning</option>
-                <option>Paper</option>
-                <option>Ink</option>
-              </select>
+
+              <div class="addProduct-btn" style="margin: auto 0;">
+                <a class='btn btn-primary btn-sm mr-2 float-right' href='/showAddProduct'>Add Product</a>
+              </div>
             </form>
 
           </div>
         </div>
       </nav>
-      <div class="container">
-        <div id="products-list" class="row">
-        </div>
+    </div>
+    <div class="container">
+      <div id="products-list" class="row">
       </div>
     </div>
-    <!-- </div> -->
     <footer class="relative bg-gray-300 pt-8 pb-6">
       <div class="container mx-auto px-4">
         <div class="flex flex-wrap">
