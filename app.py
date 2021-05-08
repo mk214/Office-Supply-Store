@@ -31,9 +31,9 @@ def logout():
 def showSignin():
     return render_template('signin.html')
   
-@app.route("/")
-def main():
-    return render_template('index.html')
+# @app.route("/")
+# def main():
+#     return render_template('index.html')
 
 @app.route("/showListing")
 def showListing():

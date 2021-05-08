@@ -13,36 +13,39 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-               <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-              <div id="navbarText">
-                <ul class="navbar-nav mr-auto">
+      <div class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+          <div id="navbarText" style="width: 100%;">
+            <ul class="navbar-nav mr-auto">
 
-                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
-                  </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+              </li>
 
-                  <li class="nav-item active">
-                    <a class="nav-link" href="/logout">Logout</a>
-                  </li>
-                </ul>
-            <form class="form-inline my-2 my-lg-0">
-      <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button id="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      <select id="chooseCategory" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-    <option selected>Categories</option>
-    <option>School Supplies</option>
-    <option>Computers</option>
-    <option>Printers</option>
-    <option>Furniture</option>
-    <option>Cleaning</option>
-    <option>Paper</option>
-    <option>Ink</option>
-  </select>
-    </form>
+              <li class="nav-item active">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+            </ul>
+            
+            <form class="form-inline my-2 my-lg-0" style="display: flex; align-items: baseline; justify-content: space-between">
+              <div class="searchSection">
+                <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button id="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </div>
+              <select id="chooseCategory" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option selected>Categories</option>
+                <option>School Supplies</option>
+                <option>Computers</option>
+                <option>Printers</option>
+                <option>Furniture</option>
+                <option>Cleaning</option>
+                <option>Paper</option>
+                <option>Ink</option>
+              </select>
+            </form>
 
           </div>
-
+        </nav>
         <div id="products-list" class="row">
         </div>
     </div>
