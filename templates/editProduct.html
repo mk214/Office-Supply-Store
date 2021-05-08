@@ -52,7 +52,7 @@
         <h3 class="text-muted">Edit Product</h3>
         <a class='btn btn-info btn-sm' style="height: 35px;" href='/adminDashboard'>Back</a>
       </div>
-        <form action="/editProduct/{{data[0]}}" method="post">
+      <form action="/editProduct/{{data[0]}}" method="post">
 
               <!-- Name input -->
               <div class="form-group">
@@ -77,14 +77,14 @@
               <!-- Link input -->
               <div class="custom-file mb-3" style="height: fit-content;">
                 <p class="control-label" for="inputLink">Upload Project Image</p>
-                <input type="file" id="inputLink" name="inputLink" accept="image/*">
+                <input type="file" class="form-control" id="inputLink" name="inputLink" accept="image/*">
               </div>
 
               <!-- Button -->
               <div class="form-group">
                 <input id="singlebutton" type="submit" name="singlebutton" class="btn btn-primary" value="Submit" />
               </div>
-        </form>
+      </form>
 
     </div>
 
