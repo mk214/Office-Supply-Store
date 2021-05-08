@@ -67,8 +67,11 @@ def searchCategory():
         con = mysql.connect()
         cursor = con.cursor()
 
-        # send query to get all of the data for all of todolist item entries
-        cursor.execute("SELECT * FROM tbl_products WHERE category = %s", (_category))
+        # send query to get all of the data for all of the product entries
+        if _category == "Categories":
+            cursor.execute("SELECT * FROM tbl_products")
+        else:
+            cursor.execute("SELECT * FROM tbl_products WHERE category = %s", (_category))
 
         # get results
         data = cursor.fetchall()
