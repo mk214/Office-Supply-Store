@@ -46,7 +46,7 @@
               </li>
             </ul>
             
-            <form class="form-inline my-2 my-lg-0" style="display: flex; align-items: baseline; justify-content: space-between">
+            <form id="formSubmit" class="form-inline my-2 my-lg-0" style="display: flex; align-items: baseline; justify-content: space-between">
               <div class="searchSection">
                 <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button id="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -237,8 +237,9 @@
                 div_col.append(div_card)
                 $('#products-list').append(div_col)
             }
-             $("#searchButton").click(function() {
+             $("#formSubmit").submit(function(e) {
 
+              e.preventDefault();
               var temp = $("#searchInput").val();
               if(temp.trim().length === 0) {
                 console.log("Nothing entered");
