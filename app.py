@@ -530,10 +530,14 @@ def editProduct(product_id):
             _category = request.form['inputCategory']
             _link = request.form['inputLink']
 
+
             conn = mysql.connect()
             cursor = conn.cursor()
 
-            cursor.execute("UPDATE tbl_products SET name=%s, price=%s, inventory=%s, category=%s, link=%s WHERE id = %s", (_title, _price, _inventory, _category, _link, product_id))
+            if(len(_link) != 0):
+                cursor.execute("UPDATE tbl_products SET name=%s, price=%s, inventory=%s, category=%s, link=%s WHERE id = %s", (_title, _price, _inventory, _category, _link, product_id))
+            else:
+                cursor.execute("UPDATE tbl_products SET name=%s, price=%s, inventory=%s, category=%s WHERE id = %s", (_title, _price, _inventory, _category, product_id))
             conn.commit()
 
             return redirect('/adminDashboard')
