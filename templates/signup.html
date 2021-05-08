@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Office Supply Store</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/1c2c2462bf.js" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+           <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+              <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="showSignIn">Sign in</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#">Sign up</a>
+                  </li>
+                </ul>
+               
+              </div>
+            </nav>
+       
+
+
+        <h3 class="text-muted">Office Supply Store</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Office Supply Store</h1>
+        <form class="form-signup col-md-4" action="/validateSignUp" method="post">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+        
+        <ul class="list-unstyled">
+          <li>
+            <small class="low-upper-case form-text text-muted">
+              <i class="fas fa-circle" aria-hidden="true"></i>
+              Atleast 1 lowercase and 1 uppercase
+            </small>
+          </li>
+
+          <li>
+            <small class="one-number form-text text-muted">
+              <i class="fas fa-circle" aria-hidden="true"></i>
+              Atleast 1 number
+            </small>
+          </li>
+
+          <li>
+            <small class="eight-character form-text text-muted">
+              <i class="fas fa-circle" aria-hidden="true"></i>
+              Atleast 8 characters
+            </small>
+          </li>
+        </ul>
+
+
+
+
+
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit" disabled>Sign Up</button>
+      </form>
+      </div>
+
+     
+    </div>
+
+
+
+    <script>
+      var lowerUppercase = document.querySelector(".low-upper-case i")
+      var number = document.querySelector(".one-number i")
+      var eightChar = document.querySelector(".eight-character i")
+    
+      var isLowerUppercase = false;
+      var isNumber = false;
+      var isEightChar = false;
+      var isEmail = false;
+    
+      $("#inputEmail").keyup(function(){
+        var email = $("#inputEmail").val()
+        checkEmail(email);
+      })
+
+      $("#inputPassword").keyup(function(){
+        var pass = $("#inputPassword").val()
+        checkPass(pass);
+      })
+
+      function checkEmail(email){
+        const re = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
+
+        if(re.test(email)){
+          isEmail = true;
+          validateSignup();
+        }
+        else{
+          isEmail = false;
+          validateSignup();
+        }
+      }
+    
+      function checkPass(password){
+
+        if(password.match(new RegExp("^(?=.*[A-Z])(?=.*[a-z])"))){
+          lowerUppercase.classList.remove('fa-circle');
+          lowerUppercase.classList.add('fa-check');
+          isLowerUppercase = true;
+        }
+        else{
+          lowerUppercase.classList.add('fa-circle');
+          lowerUppercase.classList.remove('fa-check');
+          isLowerUppercase = false;
+        }
+        if(password.match(new RegExp("^(?=.*[0-9])")))
+        {
+          isNumber = true;
+          number.classList.remove('fa-circle');
+          number.classList.add('fa-check');
+        }
+        else{
+          isNumber = false;
+          number.classList.add('fa-circle');
+          number.classList.remove('fa-check');
+        }
+        if(password.length > 7)
+        {
+          isEightChar = true;
+          eightChar.classList.remove('fa-circle');
+          eightChar.classList.add('fa-check');
+        }
+        else{
+          isEightChar = false;
+          eightChar.classList.add('fa-circle');
+          eightChar.classList.remove('fa-check');
+        }
+        if (isEightChar == true && isLowerUppercase == true && isNumber == true && isEmail == true){
+          console.log("validated password")
+        }
+        validateSignup();
+      }
+
+      function validateSignup(){
+        console.log("checking...")
+        if (isEightChar == true && isLowerUppercase == true && isNumber == true && isEmail == true){
+          $("#btnSignUp").prop("disabled",false)
+        }
+        if (isEightChar == false || isLowerUppercase == false ||isNumber == false || isEmail == false)
+        {
+          $("#btnSignUp").prop("disabled",true)
+        }
+      }
+    
+    
+    </script>
+
+
+  </body>
+</html>
