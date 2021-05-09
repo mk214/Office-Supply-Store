@@ -20,23 +20,20 @@ app.secret_key = 'secret key can be anything!'
 
 @app.route("/")
 def main():
+    user_name = ""
+    conn = mysql.connect()
+    cursor = conn.cursor()
     try:
         if session.get('user'):
             _user_id = session.get('user')
-            conn = mysql.connect()
-            cursor = conn.cursor()
             cursor.execute("SELECT email FROM tbl_users WHERE id = {0}".format(_user_id))
             data = cursor.fetchall()
             user_name = data[0][0]
           
-            if user_name == "admin@gmail.com":
-                return render_template('index.html', user_name=user_name) 
-
-        else:
-            return render_template('index.html')
+        return render_template('index.html', user_name=user_name)
 
     except Exception as e:
-        return render_template('index.html')
+        return render_template('index.html', user_name=user_name)
     finally:
         cursor.close()
         conn.close()
