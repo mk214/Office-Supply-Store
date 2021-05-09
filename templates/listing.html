@@ -9,6 +9,7 @@
     <title>Office Supply Store</title>
 
     <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+
     <!--Replace with your tailwind.css once created-->
 
 
@@ -168,8 +169,19 @@
       var itemID = $(button).attr('id');
       var itemInfo = {"productId" : itemID, "quantity" : "1"};
       var obj = JSON.stringify(itemInfo);
-      addToCart(obj);
-      console.log(obj);
+      $.ajax({
+        url: '/addToCart',
+        type: 'POST',
+        data: {
+          productId: itemID, quantity: 1
+        },
+        success: function(result) {
+          console.log(result);
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
     }
 
     </script>
