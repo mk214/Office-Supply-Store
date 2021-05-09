@@ -269,8 +269,8 @@ def checkout():
 def addToCart():
     try:
         if session.get('user'):
-            _itemId = request.json['productId']
-            _quantity = request.json['quantity']
+            _itemId = request.form['productId']
+            _quantity = request.form['quantity']
             _user = session.get('user')
 
             conn = mysql.connect()
