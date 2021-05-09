@@ -98,7 +98,10 @@ def searchItem():
         cursor = con.cursor()
 
         # send query to get all of the data for all of todolist item entries
-        cursor.execute("SELECT * FROM tbl_products WHERE UPPER(name) = UPPER(%s)", (_name))
+        if _name == "All":
+            cursor.execute("SELECT * FROM tbl_products")
+        else:
+            cursor.execute("SELECT * FROM tbl_products WHERE UPPER(name) = UPPER(%s)", (_name))
 
         # get results
         data = cursor.fetchall()
