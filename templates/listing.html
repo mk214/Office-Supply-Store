@@ -97,13 +97,13 @@
               var temp = $("#searchInput").val();
               if(temp.trim().length === 0) {
                 console.log("Nothing entered");
-                return;
+                temp = "All";
               }
               $.ajax({
                 url: '/searchItem',
                 type: 'POST',
                 data: { // data to be sent to server
-                  name:$("#searchInput").val()
+                  name:temp
                 },
                 success: function(result) {
                   console.log(result);
