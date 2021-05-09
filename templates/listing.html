@@ -94,15 +94,19 @@
             $("#searchButton").click(function() {
 
               var temp = $("#searchInput").val();
+	      var searchString = "";
               if(temp.trim().length === 0) {
                 console.log("Nothing entered");
-                return;
+               	searchString = "All";
               }
+	      else {
+	      	searchString = $("#searchInput").val();
+	      }
               $.ajax({
                 url: '/searchItem',
                 type: 'POST',
                 data: { // data to be sent to server
-                  name:$("#searchInput").val()
+                  name:searchString
                 },
                 success: function(result) {
                   console.log(result);
