@@ -182,9 +182,11 @@
     class="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 "
   >
     <div
-      class="container px-4 mx-auto flex flex-wrap items-center justify-between"
-    >
-      <div
+      class="container px-4 mx-auto flex flex-wrap items-center"
+      id = "nav-items-main"
+      >
+      
+      <!-- <div
         class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start"
       >
         <a
@@ -219,8 +221,8 @@
           href="showListing"
           >All Products</a
         >
-      </div>
-      <div
+      </div> -->
+      <!-- <div
         class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start"
       >
         <a
@@ -237,11 +239,11 @@
           href="showHistory"
           >Purchase History</a
         >
-      </div>
-      <div
+      </div> -->
+      <!-- <div
         class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none hidden"
         id="example-collapse-navbar"
-      >
+      > -->
 
       </div>
     </div>
@@ -455,6 +457,69 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      $(document).ready(function(){
+        user_name = '{{user_name|tojson}}'
+        user_name = JSON.parse(user_name)
+        console.log(user_name)
+        if(user_name == "")
+        {
+          console.log("User name is empty")
+          var nav_div_1 = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+          var nav_a_1 = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='#''>Home</a>")
+          nav_div_1.append(nav_a_1)
+
+
+          var nav_div_2 = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+          var nav_a_2 = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='showSignIn''>Sign In</a>")
+          nav_div_2.append(nav_a_2)
+
+          var nav_div_3 = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+          var nav_a_3 = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='showSignUp''>Sign Up</a>")
+          nav_div_3.append(nav_a_3)
+
+
+          $("#nav-items-main").append(nav_div_1)
+          $("#nav-items-main").append(nav_div_2)
+          $("#nav-items-main").append(nav_div_3)
+
+        }
+        else{
+            console.log("User name is not empty")
+            var nav_div_1 = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+            var nav_a_1 = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='/'>Home</a>")
+            nav_div_1.append(nav_a_1)
+
+            var nav_div_5 = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+            var nav_a_5 = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='logout'>Log Out</a>")
+            nav_div_5.append(nav_a_5)
+
+            var nav_div_6 = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+            var nav_a_6 = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='showCart'>View Cart</a>")
+            nav_div_6.append(nav_a_6)
+
+            var nav_div_7 = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+            var nav_a_7 = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='showHistory'>Purchase History</a>")
+            nav_div_7.append(nav_a_7)
+
+
+            $("#nav-items-main").append(nav_div_1)
+            $("#nav-items-main").append(nav_div_5)
+            $("#nav-items-main").append(nav_div_6)
+            $("#nav-items-main").append(nav_div_7)
+ 
+
+        }
+
+        // if(user_name == "admin@gmail.com"){
+        //   var final_div = $("<div class='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'></div>")
+        //   var a = $("<a class='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white' href='/adminDashboard'>Admin Dashboard</a>")
+        //   final_div.append(a)
+        //     $("#nav-items-main").append(final_div)
+        // }
+      })
+    </script>
 
 </body>
 

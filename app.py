@@ -53,7 +53,23 @@ def showSignin():
 
 @app.route("/showListing")
 def showListing():
-    return render_template('listing.html')
+    user_name = ""
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            _user_id = session.get('user')
+            cursor.execute("SELECT email FROM tbl_users WHERE id = {0}".format(_user_id))
+            data = cursor.fetchall()
+            user_name = data[0][0]
+          
+        return render_template('listing.html', user_name=user_name)
+
+    except Exception as e:
+        return render_template('listing.html', user_name=user_name)
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/searchCategory', methods=["POST"])
 def searchCategory():
